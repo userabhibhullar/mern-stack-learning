@@ -8,6 +8,6 @@ const todoSchema = new mongoose.Schema({
   date: { type: Date, default: new Date() },
 });
 
-const Todo = mongoose.Model("Todo", todoSchema);
+const Todo = mongoose.model("Todo", todoSchema);
 
 exports.Todo = Todo;

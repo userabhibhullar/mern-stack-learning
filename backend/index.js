@@ -1,7 +1,14 @@
+const todos = require("./routes/todos");
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const PORT = process.env.PORT || 5001;
+const cors = require("cors");
+
+app.use(cors());
+app.use(express.json());
+
+app.use("/api/todos", todos);
 
 require("dotenv").config();
 
