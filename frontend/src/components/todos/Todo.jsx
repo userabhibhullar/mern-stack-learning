@@ -2,7 +2,11 @@ import React from "react";
 import { Typography, Button, ButtonGroup } from "@mui/material";
 import { Create, Delete, CheckCircle } from "@mui/icons-material";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { checkTodo, deleteTodo } from "../../store/action/todoActions";
+
 const Todo = ({ setTodo, todo }) => {
+  const dispatch = useDispatch();
   const handleUpdateClick = () => {
     setTodo(todo);
 
@@ -26,6 +30,14 @@ const Todo = ({ setTodo, todo }) => {
   const checked = {
     textDecoration: "line-through",
   };
+
+  const handleCheck = (id) => {
+    dispatch(checkTodo(id));
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteTodo(id));
+  };
   return (
     <>
       <div style={todoStyles}>
@@ -46,7 +58,7 @@ const Todo = ({ setTodo, todo }) => {
         </div>
         <div>
           <ButtonGroup size="small" aria-label="outlined primary button group">
-            <Button>
+            <Button onClick={() => handleCheck(todo._id)}>
               {todo.isComplete ? (
                 <CheckCircle style={isCompleteStyle} color="action" />
               ) : (
@@ -56,7 +68,7 @@ const Todo = ({ setTodo, todo }) => {
             <Button onClick={() => handleUpdateClick()}>
               <Create color="primary" />
             </Button>
-            <Button>
+            <Button onClick={() => handleDelete(todo._id)}>
               <Delete color="secondary" />
             </Button>
           </ButtonGroup>

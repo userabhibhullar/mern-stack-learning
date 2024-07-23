@@ -15,6 +15,22 @@ const todoReducer = (state = [], action) => {
           return todo;
         }
       });
+    case "CHECK_TODO":
+      toast.success("todo status was changed...", {
+        position: "bottom-right",
+      });
+      return state.map((todo) => {
+        if (todo._id === action.todo.data._id) {
+          return action.todo.data;
+        } else {
+          return todo;
+        }
+      });
+    case "DELETE_TODO":
+      toast.success("todo was deleted...", {
+        position: "bottom-right",
+      });
+      return state.filter((todo) => todo._id !== action.id);
     case "ADD_TODO":
       toast.success("a todo was added...", { position: "bottom-right" });
       return [action.todo.data, ...state];

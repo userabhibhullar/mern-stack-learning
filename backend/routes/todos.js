@@ -91,9 +91,13 @@ router.patch("/:id", async (req, res) => {
 
     if (!todo) return res.status(404).send("Todo not found....");
 
-    const updatedTodo = await Todo.findByIdAndUpdate(req.params.id, {
-      isComplete: !todo.isComplete,
-    });
+    const updatedTodo = await Todo.findByIdAndUpdate(
+      req.params.id,
+      {
+        isComplete: !todo.isComplete,
+      },
+      { new: true }
+    );
     res.send(updatedTodo);
   } catch (error) {
     res.status(500).send(error.message);

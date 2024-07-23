@@ -52,3 +52,37 @@ export const updateTodo = (updatedTodo, id) => {
       });
   };
 };
+
+export const checkTodo = (id) => {
+  return (dispatch) => {
+    axios
+      .patch(`${url}/todos/${id}`, {})
+      .then((todo) => {
+        dispatch({
+          type: "CHECK_TODO",
+          todo,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response?.data, { position: "bottom-right" });
+      });
+  };
+};
+
+export const deleteTodo = (id) => {
+  return (dispatch) => {
+    axios
+      .delete(`${url}/todos/${id}`)
+      .then(() => {
+        dispatch({
+          type: "DELETE_TODO",
+          id,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response?.data, { position: "bottom-right" });
+      });
+  };
+};
