@@ -1,8 +1,8 @@
 import React from "react";
-
 import { Typography, Button, ButtonGroup } from "@mui/material";
 import { Create, Delete, CheckCircle } from "@mui/icons-material";
-const Todo = () => {
+import moment from "moment";
+const Todo = ({ todo }) => {
   const todoStyles = {
     margin: "20px auto",
     padding: "20px",
@@ -14,22 +14,38 @@ const Todo = () => {
   const grayStyle = {
     color: "#8f8f8f",
   };
+  const isCompleteStyle = {
+    color: "green",
+  };
+  const checked = {
+    textDecoration: "line-through",
+  };
   return (
     <>
       <div style={todoStyles}>
         <div>
-          <Typography variant="subtitle1">Learn React</Typography>
+          {todo.isComplete ? (
+            <Typography style={checked} variant="subtitle1">
+              {todo.name}
+            </Typography>
+          ) : (
+            <Typography variant="subtitle1">{todo.name}</Typography>
+          )}
           <Typography style={grayStyle} variant="body2">
             Author: Abhi
           </Typography>
           <Typography style={grayStyle} variant="body2">
-            Added: 4 days ago.
+            Added: {moment(todo.date).fromNow()}
           </Typography>
         </div>
         <div>
           <ButtonGroup size="small" aria-label="outlined primary button group">
             <Button>
-              <CheckCircle color="action" />
+              {todo.isComplete ? (
+                <CheckCircle style={isCompleteStyle} color="action" />
+              ) : (
+                <CheckCircle color="action" />
+              )}
             </Button>
             <Button>
               <Create color="primary" />

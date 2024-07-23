@@ -21,10 +21,13 @@ const ListTodos = () => {
   return (
     <>
       <div style={todosStyles}>
-        <Typography variant="h5">theTodos;</Typography>
-        <Todo />
-        <Todo />
-        <Todo />
+        <Typography variant="h5">
+          {todos.length > 0 ? "theTodos;" : "noTodosYet"}
+        </Typography>
+        {todos &&
+          todos.map((todo) => {
+            return <Todo todo={todo} key={todo._id} />;
+          })}
       </div>
     </>
   );
