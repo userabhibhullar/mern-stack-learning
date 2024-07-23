@@ -1,13 +1,13 @@
-const Joi = require("joi");
 const express = require("express");
-const router = express.Router();
+const Joi = require("joi");
 const jwt = require("jsonwebtoken");
-const bcrpyt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const { User } = require("../models/user");
+
+const router = express.Router();
 
 router.post("/", async (req, res) => {
   const schema = Joi.object({
-    name: Joi.string().min(3).max(30).required(),
     email: Joi.string().min(3).max(200).email().required(),
     password: Joi.string().min(6).max(200).required(),
   });
@@ -17,17 +17,17 @@ router.post("/", async (req, res) => {
 
   try {
     let user = await User.findOne({ email: req.body.email });
-    if (user)
-      return res.status(400).send("User with that email already exists...");
 
-    const { name, email, password } = req.body;
+    if (!user)
+      return res.status(400).send("User with that email does not exists...");
 
-    user = new User({ name, email, password });
+    const validpassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
 
-    const salt = await bcrpyt.genSalt(10);
-    user.password = await bcrpyt.hash(user.password, salt);
-
-    await user.save();
+    if (!validpassword)
+      return res.status(401).send("Invalid email or password...");
 
     const secret = process.env.JWT_SECRET;
     const token = jwt.sign(
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
     res.send(token);
   } catch (error) {
     res.status(500).send(error.message);
-    console.log("Error createing user", error.message);
+    console.log("error sign in user", error.message);
   }
 });
 

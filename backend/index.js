@@ -1,16 +1,18 @@
-const todos = require("./routes/todos");
-const signup = require("./routes/signUp");
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const PORT = process.env.PORT || 5001;
 const cors = require("cors");
+const todos = require("./routes/todos");
+const signup = require("./routes/signUp");
+const signin = require("./routes/signIn");
 
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/todos", todos);
 app.use("/api/signup", signup);
+app.use("/api/signin", signin);
 
 require("dotenv").config();
 
