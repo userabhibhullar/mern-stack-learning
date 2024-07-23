@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTodos } from "../../store/action/todoActions";
 
-const ListTodos = () => {
+const ListTodos = ({ setTodo }) => {
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.todos);
   console.log(todos);
@@ -26,7 +26,7 @@ const ListTodos = () => {
         </Typography>
         {todos &&
           todos.map((todo) => {
-            return <Todo todo={todo} key={todo._id} />;
+            return <Todo setTodo={setTodo} todo={todo} key={todo._id} />;
           })}
       </div>
     </>

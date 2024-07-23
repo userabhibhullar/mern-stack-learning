@@ -1,19 +1,30 @@
 import { TextField, Button, autocompleteClasses } from "@mui/material";
 import { Send } from "@mui/icons-material";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { addTodo } from "../../store/action/todoActions";
+import { addTodo, updateTodo } from "../../store/action/todoActions";
 
-const AddTodos = () => {
+const AddTodos = ({ todo, setTodo }) => {
   const dispatch = useDispatch();
-  const [todo, setTodo] = useState({
-    name: "",
-    isComplete: false,
-  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addTodo(todo));
+    if (todo._id) {
+      const id = todo._id;
+      const updatedTodo = {
+        name: todo.name,
+        isComplete: todo.isComplete,
+        date: todo.date,
+        author: "Abhi",
+      };
+      dispatch(updateTodo(updatedTodo, id));
+    } else {
+      const newTodo = {
+        ...todo,
+        date: new Date(),
+      };
+      dispatch(addTodo(newTodo));
+    }
     setTodo({ name: "", isComplete: false });
   };
 
@@ -47,7 +58,6 @@ const AddTodos = () => {
             setTodo((todo) => ({
               ...todo,
               name: e.target.value,
-              date: new Date(),
             }))
           }
         />

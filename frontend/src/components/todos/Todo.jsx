@@ -2,7 +2,13 @@ import React from "react";
 import { Typography, Button, ButtonGroup } from "@mui/material";
 import { Create, Delete, CheckCircle } from "@mui/icons-material";
 import moment from "moment";
-const Todo = ({ todo }) => {
+const Todo = ({ setTodo, todo }) => {
+  const handleUpdateClick = () => {
+    setTodo(todo);
+
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
+
   const todoStyles = {
     margin: "20px auto",
     padding: "20px",
@@ -47,7 +53,7 @@ const Todo = ({ todo }) => {
                 <CheckCircle color="action" />
               )}
             </Button>
-            <Button>
+            <Button onClick={() => handleUpdateClick()}>
               <Create color="primary" />
             </Button>
             <Button>
