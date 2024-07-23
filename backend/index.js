@@ -1,4 +1,5 @@
 const todos = require("./routes/todos");
+const signup = require("./routes/signUp");
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -9,6 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/todos", todos);
+app.use("/api/signup", signup);
 
 require("dotenv").config();
 
