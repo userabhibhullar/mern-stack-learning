@@ -1,7 +1,22 @@
 import { TextField, Button, autocompleteClasses } from "@mui/material";
 import { Send } from "@mui/icons-material";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTodo } from "../../store/action/todoActions";
 
 const AddTodos = () => {
+  const dispatch = useDispatch();
+  const [todo, setTodo] = useState({
+    name: "",
+    isComplete: false,
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(addTodo(todo));
+    setTodo({ name: "", isComplete: false });
+  };
+
   const formStyles = {
     margin: "0px auto",
     padding: "30px",
@@ -15,13 +30,26 @@ const AddTodos = () => {
   };
   return (
     <>
-      <form noValidate autoComplete="off" style={formStyles}>
+      <form
+        noValidate
+        autoComplete="off"
+        style={formStyles}
+        onSubmit={handleSubmit}
+      >
         <TextField
           variant="outlined"
           id="enter-todo"
           label="enterToDo"
           autoFocus
           fullWidth
+          value={todo.name}
+          onChange={(e) =>
+            setTodo((todo) => ({
+              ...todo,
+              name: e.target.value,
+              date: new Date(),
+            }))
+          }
         />
         <Button
           style={submitStyles}
