@@ -4,10 +4,15 @@ import NavBar from "./components/navBar/NavBar";
 import { Container } from "@mui/material";
 
 const App = () => {
+  const contentStyles = {
+    margin: "30px auto",
+  };
   return (
     <Container maxWidth="md">
       <NavBar />
-      <Outlet />
+      <Container style={contentStyles}>
+        <Outlet />
+      </Container>
     </Container>
   );
 };
