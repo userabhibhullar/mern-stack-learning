@@ -46,4 +46,14 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
+    res.send(deletedTodo);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log("Error deleting todo", error.message);
+  }
+});
+
 module.exports = router;
