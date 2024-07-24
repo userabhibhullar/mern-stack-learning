@@ -1,9 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { signOut } from "../../store/action/authActions";
 import { AppBar, Typography, Toolbar, Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
   const linkStyles = {
     color: "white",
     textDecoration: "none",
@@ -13,8 +17,8 @@ const NavBar = () => {
   };
 
   const handleSignOut = () => {
-    console.log("navigating");
-    navigate("/signin");
+    dispatch(signOut());
+    redirect("/signin");
   };
   return (
     <>
@@ -25,22 +29,29 @@ const NavBar = () => {
               toDoApp;
             </Link>
           </Typography>
-          <Typography variant="subtitle2" style={rootStyles}>
-            logged in as Abhi
-          </Typography>
-          <Button onClick={handleSignOut} color="inherit">
-            SignOut
-          </Button>
-          <Button color="inherit">
-            <Link to={"/signin"} style={linkStyles}>
-              Sign In
-            </Link>
-          </Button>
-          <Button color="inherit">
-            <Link to={"/signup"} style={linkStyles}>
-              SignUp
-            </Link>
-          </Button>
+          {auth._id ? (
+            <>
+              <Typography variant="subtitle2" style={rootStyles}>
+                logged in as {auth.name}
+              </Typography>
+              <Button onClick={handleSignOut} color="inherit">
+                SignOut
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button color="inherit">
+                <Link to={"/signin"} style={linkStyles}>
+                  Sign In
+                </Link>
+              </Button>
+              <Button color="inherit">
+                <Link to={"/signup"} style={linkStyles}>
+                  SignUp
+                </Link>
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </>

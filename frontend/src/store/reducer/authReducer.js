@@ -22,6 +22,15 @@ const authReducer = (state = initialState, action) => {
         email: user.email,
         _id: user._id,
       };
+    case "SIGN_OUT":
+      localStorage.removeItem("token");
+      toast("Goodbye...", { position: "bottom-right" });
+      return {
+        token: localStorage.getItem("token"),
+        name: null,
+        email: null,
+        _id: null,
+      };
     default:
       return state;
   }

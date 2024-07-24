@@ -35,6 +35,14 @@ export const loadUser = () => {
   };
 };
 
+export const signOut = () => {
+  return (dispatch) => {
+    dispatch({
+      type: "SIGN_OUT",
+    });
+  };
+};
+
 export const signIn = (creds) => {
   return (dispatch) => {
     axios
