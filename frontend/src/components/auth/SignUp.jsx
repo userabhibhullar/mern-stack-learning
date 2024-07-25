@@ -5,14 +5,22 @@ import { signUp } from "../../store/action/authActions";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const auth = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth._id) {
+      navigate("/");
+    }
+  }, [auth, navigate]);
+
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
   });
-  const auth = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const formStyles = {
     margin: "0px auto",
     padding: "30px",
@@ -32,7 +40,7 @@ const SignUp = () => {
     });
   };
 
-  if (auth._id) return navigate("/");
+  if (auth._id) return null;
 
   return (
     <>

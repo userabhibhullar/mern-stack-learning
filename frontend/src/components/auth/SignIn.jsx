@@ -1,13 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../store/action/authActions";
 import { TextField, Typography, Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (auth._id) {
+      navigate("/");
+    }
+  }, [auth, navigate]);
+
+  const dispatch = useDispatch();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -31,7 +38,7 @@ const SignIn = () => {
     marginTop: "20px",
   };
 
-  if (auth._id) return navigate("/");
+  if (auth._id) return null;
 
   return (
     <>
